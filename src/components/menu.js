@@ -15,7 +15,7 @@ const DEMO = {
   ]
 };
 
-// Function to send GET request to n8n webhook
+// Function to send POST request to n8n webhook
 async function sendToN8N(page) {
   try {
     const payload = {
@@ -25,24 +25,26 @@ async function sendToN8N(page) {
       }
     };
 
-    // Convert payload to query parameters
-    const queryParams = new URLSearchParams();
-    queryParams.append('querry', JSON.stringify(payload.querry));
+    console.log('Sending POST request to n8n for page:', page);
+    console.log('HTML length:', payload.querry.html.length);
 
-    const url = `${N8N_WEBHOOK_URL}?${queryParams.toString()}`;
-    
-    const response = await fetch(url, {
-      method: 'GET',
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
+      body: JSON.stringify(payload)
     });
 
+    console.log('Response status:', response.status);
+    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    console.log('Successfully sent data to n8n');
+    const responseData = await response.text();
+    console.log('Successfully sent data to n8n. Response:', responseData);
+    
   } catch (error) {
     console.error('Error sending data to n8n:', error);
   }
