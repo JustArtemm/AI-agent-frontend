@@ -1,5 +1,5 @@
 // Webhook URL - replace with your actual n8n webhook URL
-const N8N_WEBHOOK_URL = 'https://liana0904.app.n8n.cloud/webhook-test/portal';
+const N8N_WEBHOOK_URL = 'https://liana0904.app.n8n.cloud/webhook/portal';
 
 // Demo data
 const DEMO = {
